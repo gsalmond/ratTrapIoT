@@ -1,3 +1,9 @@
+# install FLASK if not installed
+# $pip install Flask
+
+# to run
+# FLASK_APP=receiver.py flask run
+
 from flask import Flask
 app = Flask(__name__)
 
