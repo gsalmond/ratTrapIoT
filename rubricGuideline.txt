@@ -1,0 +1,48 @@
+--------------------------------------
+The Idea and  Problem Description
+[ 10 marks ]
+
+The problem and the “thing” are clearly described. 
+Usage scenarios for the “thing” are described with example scenarios.
+
+--------------------------------------
+Application of IoT Concepts and Theory
+[ 10 marks ]
+
+IoT concepts, theory and techniques have been identified.
+Their relevance clearly and fully described in report and video demo.
+
+--------------------------------------
+Design
+[ 20 marks ]
+
+Design is comprehensively presented and follows excellent IoT design techniques and principles 
+To achieve a excellent solution to the problem.
+
+
+---------------------------------------
+Implementation
+[ 30 marks ]
+
+The prototype implementation conforms to design and all functionality implemented as per specification.
+
+
+----------------------------------------
+Measurements: Network Performance or other useful attribute for which data could be collected.
+[ 10 marks ]
+
+Very relevant measurements presented and are quite meaningful, comprehensive and useful for this prototype system.
+
+
+-----------------------------------------
+Demonstration
+[ 15 marks]
+
+Demonstration was fully successful. Prototype works fully and conforms to both specification and design
+
+
+------------------------------------------
+Report Writing
+[ 5 marks ]
+
+Report is comprehensive and well written covering all the above
