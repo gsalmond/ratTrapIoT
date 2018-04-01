@@ -38,6 +38,6 @@ try:
             break
         
 finally:
-    print ("closing goes here")
+    print ("Closing connection")
     #connection cleanup
     connection.close()
