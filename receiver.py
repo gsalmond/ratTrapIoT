@@ -5,7 +5,8 @@
 # FLASK_APP=receiver.py flask run
 
 from flask import Flask
-app = Flask(__name__)
+_name_ == ‘__main__’ :
+    app.run(debug=True, host=‘0.0.0.0’)
 
 @app.route("/wait")
 def wait():
