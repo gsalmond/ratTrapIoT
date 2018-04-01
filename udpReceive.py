@@ -2,7 +2,7 @@ import socket
 import subprocess
 
 IP = subprocess.check_output(["hostname", "-I"]).split()[0]
-UDP_IP = str(IP)[2:-1]
+UDP_IP = str(IP)#[2:-1]
 UDP_PORT = 5005
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
