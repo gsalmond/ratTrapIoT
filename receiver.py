@@ -5,8 +5,7 @@
 # FLASK_APP=receiver.py flask run
 
 from flask import Flask
-_name_ == ‘__main__’ :
-    app.run(debug=True, host=‘0.0.0.0’)
+app = Flask(__name__)
 
 @app.route("/wait")
 def wait():
@@ -19,3 +18,6 @@ def caught():
 @app.route("/missed")
 def missed():
     return "The trap has gone off, the rat has been decapitated or escaped"
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0')
