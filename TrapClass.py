@@ -30,6 +30,7 @@ class TrapClass:
         self.set = False
         self.serverIP = IP
         self.serverPort = port
+        self.hasServerIP = True
 
     def connectToServer(self):
         sock.connect(self.serverIP, self.serverPort) #connect to server
@@ -38,19 +39,24 @@ class TrapClass:
         sock.sendall(self.trapState)
         reply = s.recv(1024) #Review the size of this ?is it apprpriate
         print reply
+        if (reply != "caught") or (reply != "missed") or (reply != "set") or (reply != "unknown"):
+            self.hasServerIP = False
 
-    def communicateStateRoutes(self):
-        if self.trapState == 'caught':
-            print ("You need to implement the urllib properly")
-        elif self.trapState == 'missed':
-            print ("You need to implement the urllib properly")
-        elif self.trapState == 'set':
-            print ("You need to implement the urllib properly")
-            f = opener.open('http://' + serverIP + ':5000/wait')
-        elif self.trapState == 'unknown':
-            print ("You need to implement the urllib properly")
-        elif self.trapState == 'new':
-            print ("You need to implement the urllib properly")
+    def hasHubIP():
+        return self.hasServerIP
+
+    # def communicateStateRoutes(self):
+    #     if self.trapState == 'caught':
+    #         print ("You need to implement the urllib properly")
+    #     elif self.trapState == 'missed':
+    #         print ("You need to implement the urllib properly")
+    #     elif self.trapState == 'set':
+    #         print ("You need to implement the urllib properly")
+    #         f = opener.open('http://' + serverIP + ':5000/wait')
+    #     elif self.trapState == 'unknown':
+    #         print ("You need to implement the urllib properly")
+    #     elif self.trapState == 'new':
+    #         print ("You need to implement the urllib properly")
 
     def getTrapState(self):
         if self.missed == False and self.set == False:
