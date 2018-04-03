@@ -27,15 +27,18 @@ def displayStatus():
             if status == "caught":
                 print (data)
                 # o.displayRat(1000)
-                connection.sendall(data)# sends back the data probablly change this
-            elif status == "miss":
+                connection.sendall(data)# sends back the data
+            elif status == "missed":
                 print (data)
                 # o.displayNoRat(1000)
-                connection.sendall(data)# sends back the data probablly change this
+                connection.sendall(data)# sends back the data
             elif status == "set":
                 print (data)
                 # o.displayTick(1000)
-                connection.sendall(data)# sends back the data probablly change this
+                connection.sendall(data)# sends back the data
+            elif status == "unknown":
+                # o.displayCross(1000)
+                connection.sendall(data) # sends back the data
             else:
                 break
 
