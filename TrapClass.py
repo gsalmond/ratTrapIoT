@@ -16,11 +16,6 @@ class TrapClass:
     GPIO.setup(9, GPIO.OUT)
     GPIO.setup(10, GPIO.OUT)
 
-    GPIO.add_event_detect(4, GPIO.BOTH)
-    GPIO.add_event_detect(13, GPIO.BOTH)
-    GPIO.add_event_callback(4, missedSwitch)
-    GPIO.add_event_callback(13, setSwitch)
-
     #instance variables
     def __init__(self, tID, tType, IP, port):
         self.id = tID   #the trap ID
@@ -72,7 +67,7 @@ class TrapClass:
             print ("Error: Something is wrong with your trap. Please contact the developer")
             self.trapState = 'unknown'
 
-    def missedSwitch(self, channel):
+    def missedSwitch(self):
         if GPIO.input(4):
             GPIO.output(9, GPIO.HIGH)
             print ("red light on")
@@ -86,7 +81,7 @@ class TrapClass:
         #determine trapState
         self.getTrapState()
 
-    def setSwitch(self, channel):
+    def setSwitch(self):
         if GPIO.input(13):
             GPIO.output(10, GPIO.HIGH)
             print ("green light on")
@@ -99,3 +94,8 @@ class TrapClass:
 
             #determine trapState
             self.getTrapState()
+
+    GPIO.add_event_detect(4, GPIO.BOTH)
+    GPIO.add_event_detect(13, GPIO.BOTH)
+    GPIO.add_event_callback(4, missedSwitch)
+    GPIO.add_event_callback(13, setSwitch)
