@@ -22,5 +22,5 @@ def getHubIP():
 while True:
 	hubIP = getHubIP()
 	trapInstance = TrapClass(123, "Rat", hubIP, 9050)
-	while True: # change to if hub ip is still known
+	while trapInstance.hasHubIP():
 		pass
