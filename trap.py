@@ -3,6 +3,8 @@
 import socket
 import subprocess
 
+from TrapClass import TrapClass
+
 # to be run when a rat trap is not associated with a hub, returns hub ip address as a string
 def getHubIP():
     IP = subprocess.check_output(["hostname", "-I"]).split()[0]
@@ -16,3 +18,9 @@ def getHubIP():
         data, addr = sock.recvfrom(1024)
         if data.split()[0] == "RatTrapHub:":
             return data.split()[1]
+
+while True:
+	hubIP = getHubIP()
+	trapInstance = TrapClass(123, "Rat", hubIP, 9050)
+	while True: # change to if hub ip is still known
+		pass
