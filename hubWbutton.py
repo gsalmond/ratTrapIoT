@@ -5,7 +5,7 @@ from threading import Thread
 from senseOutput import SenseOutput
 from sense_hat import SenseHat, ACTION_PRESSED, ACTION_HELD, ACTION_RELEASED
 
-o = SenseOutput('Duncan')
+o = SenseOutput('RatTrap1')
 
 # sends individual packets out over a local network to potential rat traps containing ip of hub
 def advertiseHubIP():
@@ -20,16 +20,21 @@ def advertiseHubIP():
         sock.sendto("RatTrapHub: " + thisIP, (UDP_IP, UDP_PORT))
 
 def startServer():
+    global o
+    print('starting server')
     #setup socket
     sock1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     #get IP address
     IP = subprocess.check_output(["hostname", "-I"]).split()[0]
     myIP = str(IP)
+    
+    print("my IP")
+    print(myIP)
 
     #configure socket
     sock1.bind((myIP, 9050))
-    sock1.listen(1) #allow only 1 connection
+    sock1.listen(1)
     connection, client_address = sock1.accept()
 
     try:
@@ -38,26 +43,33 @@ def startServer():
             status = str(data)
             if status == "caught":
                 print (data)
-                o.displayRat(1000)
+                o.displayRat()
                 connection.sendall(data)# sends back the data 
             elif status == "missed":
                 print (data)
-                o.displayNoRat(1000)
+                o.displayNoRat()
                 connection.sendall(data)# sends back the data
             elif status == "set":
                 print (data)
-                o.displayTick(1000)
+                o.displayTick()
+                connection.sendall(data)# sends back the data
+            elif status == "new":
+                print (data)
+                o.displayNoRat()
                 connection.sendall(data)# sends back the data 
             elif status == "unknown":
                 print (data)
-                o.displayCross(1000)
+                o.displayCross()
                 connection.sendall(data)# sends back the data 
             elif status == "close":
+                o.displayShutdown()
                 break
             else:
+                connection.sendall(data)# sends back the data
                 pass
             
     finally:
+
         print ("closing server socket")
         #connection cleanup
         connection.close()
@@ -91,6 +103,3 @@ discoveryThread = Thread(target=discovery)
 serverThread.start()
 discoveryThread.start()
 
-
-#for x in traps:
- #   print (x)

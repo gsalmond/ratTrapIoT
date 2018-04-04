@@ -26,29 +26,36 @@ def getHubIP():
         
 def missedSwitch(channel):
     global t
+    #print("missed flag", t.getMissedFlag())
     if GPIO.input(4):
         GPIO.output(9, GPIO.HIGH)
         print ("red light on")
+        #if t.getMissedFlag() is not True:
         t.setMissedFlag(True)
     else:
         GPIO.output(9, GPIO.LOW)
         print ("red light off")
+        #if t.getMissedFlag() is not False:
         t.setMissedFlag(False)
         
 
 def setSwitch(channel):
     global t
+    #print("set flag", t.getSetFlag())
     if GPIO.input(13):
         GPIO.output(10, GPIO.HIGH)
         print ("green light on")
+        #if t.getSetFlag() is not True:
         t.setSetFlag(True)
     else:
         GPIO.output(10, GPIO.LOW)
         print ("green light off")
+        #if t.getSetFlag is not False:
         t.setSetFlag(False)
 
 hubIP = getHubIP()
 t = TrapClass(123, "Rat", hubIP, 9050)
+t.setInitialState()
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(4, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  #input for trap start state / missed state

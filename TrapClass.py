@@ -1,59 +1,67 @@
 import RPi.GPIO as GPIO
 import time
 import socket
-import urllib
 
 class TrapClass:
     #class variables
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    opener = urllib.FancyURLopener({})
-
-
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(4, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  #input for trap start state / missed state
-    GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # input for trap set state
-    GPIO.setup(9, GPIO.OUT)
-    GPIO.setup(10, GPIO.OUT)
 
     #instance variables
     def __init__(self, tID, tType, IP, port):
         self.id = tID   #the trap ID
         self.type = tType   #the type of trap (Rat, Mouse, Stoat)
-        self.trapState = 'new'
+        self.trapState = 'missed'
         self.missed = True
         self.set = False
         self.serverIP = IP
         self.serverPort = port
         self.hasServerIP = True
-
+    
     def connectToServer(self):
-        sock.connect(self.serverIP, self.serverPort) #connect to server
+        print("connecting to server...")
+        self.sock.connect((self.serverIP, self.serverPort)) #connect to server
+        
 
     def communicateStateSockets(self):
-        sock.sendall(self.trapState)
-        reply = s.recv(1024) #Review the size of this ?is it apprpriate
+        print("communicating state...")
+        
+        print("sending state: ", self.trapState) 
+        self.sock.sendall(self.trapState)
+        time.sleep(2)
+        reply = self.sock.recv(1024)
         print reply
-        if (reply != "caught") or (reply != "missed") or (reply != "set") or (reply != "unknown"):
+        if (reply != "caught") or (reply != "missed") or (reply != "set") or (reply != "new") or (reply != "unknown"):
             self.hasServerIP = False
+        #self.sock.close()
 
-    def hasHubIP():
+    def hasHubIP(self):
         return self.hasServerIP
+    
+    def setInitialState(self):
+        print("hubIP:", self.serverIP)
+        print("hubPort:", self.serverPort)
+        print("Setting inital state...")
+        self.connectToServer()
+        print("connecting to server...")
+        #self.communicateStateSockets()
+    
+    def setSetFlag(self, state):
+        self.set = state
+        self.setTrapState()
+        
+    def setMissedFlag(self, state):
+        self.missed = state
+        self.setTrapState()
+        
+    def getSetFlag(self):
+        return self.set
+        
+    def getMissedFlag(self):
+        return self.missed
+        
 
-    # def communicateStateRoutes(self):
-    #     if self.trapState == 'caught':
-    #         print ("You need to implement the urllib properly")
-    #     elif self.trapState == 'missed':
-    #         print ("You need to implement the urllib properly")
-    #     elif self.trapState == 'set':
-    #         print ("You need to implement the urllib properly")
-    #         f = opener.open('http://' + serverIP + ':5000/wait')
-    #     elif self.trapState == 'unknown':
-    #         print ("You need to implement the urllib properly")
-    #     elif self.trapState == 'new':
-    #         print ("You need to implement the urllib properly")
-
-    def getTrapState(self):
+    def setTrapState(self):
         if self.missed == False and self.set == False:
             print ("You caught something")
             self.trapState = 'caught'
@@ -66,36 +74,35 @@ class TrapClass:
         else:
             print ("Error: Something is wrong with your trap. Please contact the developer")
             self.trapState = 'unknown'
+        self.communicateStateSockets()
+        #time.sleep(10)
 
-    def missedSwitch(self):
-        if GPIO.input(4):
-            GPIO.output(9, GPIO.HIGH)
-            print ("red light on")
-            print ("Missed the Rat")
-            self.missed = True
-        else:
-            GPIO.output(9, GPIO.LOW)
-            print ("red light off")
-            self.missed = False
-
-        #determine trapState
-        self.getTrapState()
-
-    def setSwitch(self):
-        if GPIO.input(13):
-            GPIO.output(10, GPIO.HIGH)
-            print ("green light on")
-            print ("Trap is set")
-            self.set = True
-        else:
-            GPIO.output(10, GPIO.LOW)
-            print ("green light off")
-            self.set = False
-
-            #determine trapState
-            self.getTrapState()
-
-    GPIO.add_event_detect(4, GPIO.BOTH)
-    GPIO.add_event_detect(13, GPIO.BOTH)
-    GPIO.add_event_callback(4, missedSwitch)
-    GPIO.add_event_callback(13, setSwitch)
+##    def missedSwitch(self):
+##        if GPIO.input(4):
+##            GPIO.output(9, GPIO.HIGH)
+##            print ("red light on")
+##            print ("Missed the Rat")
+##            self.missed = True
+##        else:
+##            GPIO.output(9, GPIO.LOW)
+##            print ("red light off")
+##            self.missed = False
+##
+##        #determine trapState
+##        self.getTrapState()
+##
+##    def setSwitch(self):
+##        if GPIO.input(13):
+##            GPIO.output(10, GPIO.HIGH)
+##            print ("green light on")
+##            print ("Trap is set")
+##            self.set = True
+##        else:
+##            GPIO.output(10, GPIO.LOW)
+##            print ("green light off")
+##            self.set = False
+##
+##            #determine trapState
+##            self.getTrapState()
+##
+##
