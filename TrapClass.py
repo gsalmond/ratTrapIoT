@@ -43,8 +43,8 @@ class TrapClass:
         print("hubPort:", self.serverPort)
         print("Setting inital state...")
         self.connectToServer()
-        print("connecting to server...")
-        #self.communicateStateSockets()
+        print("connected to server...")
+        
     
     def setSetFlag(self, state):
         self.set = state
@@ -75,34 +75,4 @@ class TrapClass:
             print ("Error: Something is wrong with your trap. Please contact the developer")
             self.trapState = 'unknown'
         self.communicateStateSockets()
-        #time.sleep(10)
-
-##    def missedSwitch(self):
-##        if GPIO.input(4):
-##            GPIO.output(9, GPIO.HIGH)
-##            print ("red light on")
-##            print ("Missed the Rat")
-##            self.missed = True
-##        else:
-##            GPIO.output(9, GPIO.LOW)
-##            print ("red light off")
-##            self.missed = False
-##
-##        #determine trapState
-##        self.getTrapState()
-##
-##    def setSwitch(self):
-##        if GPIO.input(13):
-##            GPIO.output(10, GPIO.HIGH)
-##            print ("green light on")
-##            print ("Trap is set")
-##            self.set = True
-##        else:
-##            GPIO.output(10, GPIO.LOW)
-##            print ("green light off")
-##            self.set = False
-##
-##            #determine trapState
-##            self.getTrapState()
-##
-##
+  
