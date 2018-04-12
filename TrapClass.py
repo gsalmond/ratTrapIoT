@@ -18,11 +18,12 @@ class TrapClass:
         self.serverPort = port
         self.hasServerIP = True
     
+    #connects to the server
     def connectToServer(self):
         print("connecting to server...")
         self.sock.connect((self.serverIP, self.serverPort)) #connect to server
         
-
+    #sends current state to the hub
     def communicateStateSockets(self):
         print("communicating state...")
         
@@ -33,11 +34,12 @@ class TrapClass:
         print reply
         if (reply != "caught") or (reply != "missed") or (reply != "set") or (reply != "new") or (reply != "unknown"):
             self.hasServerIP = False
-        #self.sock.close()
 
+    #determines if there is an IP address set
     def hasHubIP(self):
         return self.hasServerIP
     
+    #starts communicating with the hub
     def setInitialState(self):
         print("hubIP:", self.serverIP)
         print("hubPort:", self.serverPort)
@@ -45,22 +47,25 @@ class TrapClass:
         self.connectToServer()
         print("connected to server...")
         
-    
+    #updates the state of the set flag
     def setSetFlag(self, state):
         self.set = state
         self.setTrapState()
         
+    #updates the state of the missed flag 
     def setMissedFlag(self, state):
         self.missed = state
         self.setTrapState()
-        
+    
+    #gets the current state of the set flag
     def getSetFlag(self):
         return self.set
         
+    #gets the current state of the missed flag
     def getMissedFlag(self):
         return self.missed
         
-
+    #determines if the trap is set, missed (a rat) or caught (a rat) based on the state of the two flags (set, and missed)
     def setTrapState(self):
         if self.missed == False and self.set == False:
             print ("You caught something")
